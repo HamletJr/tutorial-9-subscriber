@@ -10,3 +10,7 @@
 
 2.  What does it mean? `guest:guest@localhost:5672`, what is the first `guest`, and what is the second `guest`, and what is `localhost:5672` is for?
     - `guest:guest@localhost:5672` adalah URL koneksi untuk menyambung ke RabbitMQ. `guest` pertama adalah username dari user yang ingin login, sementara `guest` kedua adalah password dari user yang ingin login. Keduanya bernilai `guest` secara default dan dapat berubah-ubah sesuai dengan user yang ingin menyambung ke RabbitMQ. `localhost:5672` adalah alamat dari instance RabbitMQ yang ingin dituju, dalam kasus ini kita ingin menyambung ke RabbitMQ yang berjalan pada komputer kita sendiri (localhost) pada port 5672.
+
+### Reflection 2 (Simulating slow subcriber)
+![Screenshot of RabbitMQ chart showing slow subscriber](SlowSubscriber.png)
+- Terlihat pada graf pertama (graf di atas), terdapat lonjakan yang menunjukkan jumlah pesan yang tersimpan di dalam queue mengalami kenaikan. Ini terjadi karena *publisher* mengirim pesan lebih cepat daripada di-*consume* oleh *subscriber* (yang sengaja diberi *delay* untuk mensimulasikan *subscriber* yang lambat), sehingga pesan-pesan yang belum dapat diproses disimpan terlebih dahulu di dalam queue untuk kemudian di-*consume* oleh *subscriber* satu per satu. Saya menjalankan *publisher* sekitar 5 kali sehingga ada hampir 35 pesan yang tersimpan di dalam queue.
