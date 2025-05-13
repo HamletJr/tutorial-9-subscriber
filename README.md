@@ -17,12 +17,19 @@
 
 ### Reflection 3 (Running at least 3 subscribers)
 ![Screenshot of running 3 subscribers and 1 publisher](ManySubscribers.png)
-- Ketika kita menjalankan lebih daru satu *subscriber*, dapat dilihat bahwa pesan-pesan dari *publisher* tersebar di antara semua *instance* *subscriber*. Ini menunjukkan bahwa kita dapat mempercepat waktu pemrosesan dengan menjalankan banyak *subscriber* secara parallel. *Message broker* pun akan memastikan bahwa setiap pesan hanya akan di-*consume* dan diproses oleh satu *subscriber*.  
+- Ketika kita menjalankan lebih dari satu *subscriber*, dapat dilihat bahwa pesan-pesan dari *publisher* tersebar di antara semua *instance* *subscriber*. Ini menunjukkan bahwa kita dapat mempercepat waktu pemrosesan dengan menjalankan banyak *subscriber* secara parallel. *Message broker* pun akan memastikan bahwa setiap pesan hanya akan di-*consume* dan diproses oleh satu *subscriber*.  
 
 ![Screenshot of RabbitMQ chart showing 3 slow subscribers](Chart.png)
 - Akibat dari adanya banyak *subscriber* adalah graf *queued messages* yang sebelumnya mengalami lonjakan yang cukup lama sekarang hanya mengalami lonjakan yang singkat. *Throughput* dari *consumer* juga lebih menyerupai *throughput* dari *producer*. Hal ini terjadi karena kita memiliki lebih banyak *subscriber* yang dapat memproses pesan dari *publisher*. Oleh karena itu, walaupun setiap *consumer* sekarang lebih lambat, adanya 3 *instance* *consumer* membantu meningkatkan jumlah pesan yang dapat diproses dalam satu waktu. Akhirnya, hal ini juga membantu mengurangi jumlah pesan yang tertahan di dalam queue. Untuk hal yang dapat diperbaiki dari kode *publisher* dan *subscriber*, mungkin URL yang digunakan untuk melakukan koneksi dapat disembunyikan di dalam variabel env agar tidak dapat diakses oleh orang lain.
 
 ## Modul 9 (Bonus)
-### Reflection 4 (Simulating slow subscriber)
+### Reflection 4 (Simulating slow subscriber - Cloud)
 ![Simulating slow subscriber on cloud](SlowSubscriber_Cloud.png)
 - Sama seperti sebelumnya, terlihat pada graf pertama bahwa terdapat lonjakan yang menunjukkan jumlah pesan yang tersimpan di dalam queue mengalami kenaikan. Ini terjadi karena *publisher* mengirim pesan lebih cepat daripada di-*consume* oleh *subscriber* (yang sengaja diberi *delay* untuk mensimulasikan *subscriber* yang lambat), sehingga pesan-pesan yang belum dapat diproses disimpan terlebih dahulu di dalam queue untuk kemudian di-*consume* oleh *subscriber* satu per satu. Kali ini saya menjalankan *publisher* sekitar 3 kali sehingga ada sekitar 11-12 pesan yang tersimpan di dalam queue.
+
+### Reflection 5 (Running at least 3 subscribers - Cloud)
+![Running 3 subscribers and 1 publisher on cloud RabbitMQ](ManySubscribers_Cloud.png)
+- Sama seperti sebelumnya, ketika kita menjalankan lebih dari satu *subscriber*, dapat dilihat bahwa pesan-pesan dari *publisher* tersebar di antara semua *instance* *subscriber*.
+
+![Screenshot of RabbitMQ chart showing 3 slow subscribers](Chart_Cloud.png)
+- Sama seperti sebelumnya, karena ada banyak *subscriber* yang melakukan pemrosesan terhadap pesan-pesan yang masuk, graf *queued messages* yang sebelumnya mengalami lonjakan yang cukup lama sekarang hanya mengalami lonjakan yang singkat.
